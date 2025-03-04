@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ペルソナ選定</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* persona.html専用のスタイル */
+    body {
+      background-color: #1a1b2e;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+    }
+    
+    .main-container {
+      max-width: 1000px;
+      margin: 100px auto 30px;
+      padding: 30px;
+      background-color: #252A41;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .header-text {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .header-text h1 {
+      font-size: 2rem;
+      margin: 0;
+      margin-right: 15px;
+    }
+    
+    .header-text p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    
+    .form-group {
+      margin-bottom: 30px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    #persona-input {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 6px;
+      background-color: #1a1b2e;
+      color: #FFFFFF;
+      font-size: 16px;
+    }
+    
+    .button {
+      padding: 12px 25px;
+      background-color: #7B5DF5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    
+    .button:hover {
+      background-color: #6344E0;
+    }
+    
+    /* 進捗バーのスタイル改善 */
+    .progress-container {
+      margin: 30px 0;
+      background-color: #1F2236;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    
+    .progress-steps {
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+    }
+    
+    .progress-bar {
+      position: absolute;
+      height: 4px;
+      background-color: #3D4267;
+      top: 23px; /* ステップのドットの中央に合わせる */
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+    
+    .progress-bar-fill {
+      position: absolute;
+      height: 4px;
+      background-color: #7B5DF5;
+      top: 0;
+      left: 0;
+      width: 0%; /* JavaScriptで制御 */
+      transition: width 0.5s ease;
+      z-index: 2;
+    }
+    
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 3;
+      width: 20%;
+    }
+    
+    .step-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #3D4267;
+      margin-bottom: 10px;
+      transition: background-color 0.3s;
+      border: 3px solid #1F2236;
+    }
+    
+    .step-label {
+      font-size: 0.9rem;
+      text-align: center;
+      color: #8A8DB0;
+      transition: color 0.3s;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .progress-step.active .step-dot {
+      background-color: #7B5DF5;
+      box-shadow: 0 0 10px rgba(123, 93, 245, 0.5);
+    }
+    
+    .progress-step.active .step-label {
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+    
+    .progress-step.completed .step-dot {
+      background-color: #7B5DF5;
+    }
+    
+    .progress-step.completed .step-label {
+      color: #FFFFFF;
+    }
+    
+    #message-box {
+      margin-top: 20px;
+      border-radius: 8px;
+      background-color: #1F2236;
+      padding: 20px;
+      min-height: 100px;
+    }
+    
+    #output-container {
+      margin-top: 30px;
+      display: none;
+    }
+    
+    #persona-output {
+      width: 100%;
+      min-height: 300px;
+      background-color: #1a1b2e;
+      border: 1px solid #373A59;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: monospace;
+      margin-bottom: 15px;
+      white-space: pre-wrap;
+      resize: vertical;
+      overflow-x: hidden; /* 横方向のはみ出しを防止 */
+      overflow-y: auto; /* 縦方向のスクロールを有効に */
+      max-width: 100%; /* 横幅を制限 */
+      box-sizing: border-box; /* paddingを含めた幅に設定 */
+    }
+    
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .copy-button {
+      background-color: #4D5277;
+    }
+    
+    .copy-button:hover {
+      background-color: #5A5F8D;
+    }
+    
+    .success-message {
+      color: #8AFF80;
+      margin-left: 10px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    
+    .success-message.show {
+      opacity: 1;
+    }
+    
+    .return-button {
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .return-button .button {
+      min-width: 200px;
+    }
+    
+    .completion-message {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: rgba(123, 93, 245, 0.1);
+      border-left: 5px solid #7B5DF5;
+    }
+    
+    .completion-message .checkmark {
+      font-size: 24px;
+      margin-right: 10px;
+      color: #8AFF80;
+    }
+
+    /* 追加：長いコンテンツに対応するため */
+    pre, code {
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
+    }
+    
+    /* セミナー作成ボタン用のスタイル */
+    .seminar-button {
+      background-color: #FF9D5C;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      transition: background-color 0.2s;
+    }
+    
+    .seminar-button:hover {
+      background-color: #FF8A3D;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="header-text">
+      <h1>ペルソナ選定</h1>
+      <p>あなたの商品を入力してください。AIがターゲットを考えます。</p>
+    </div>
+
+    <!-- 入力フォーム -->
+    <div class="form-group">
+      <input type="text" id="persona-input" placeholder="あなたの商品またはキーワードを入力">
+      <button id="persona-submit-btn" class="button">送信</button>
+    </div>
+    
+    <!-- 改良版進捗バー -->
+    <div class="progress-container">
+      <div class="progress-steps">
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-step" id="step-1">
+          <div class="step-dot"></div>
+          <div class="step-label">データ解析</div>
+        </div>
+        <div class="progress-step" id="step-2">
+          <div class="step-dot"></div>
+          <div class="step-label">ペルソナ構築</div>
+        </div>
+        <div class="progress-step" id="step-3">
+          <div class="step-dot"></div>
+          <div class="step-label">背景ストーリー</div>
+        </div>
+        <div class="progress-step" id="step-4">
+          <div class="step-dot"></div>
+          <div class="step-label">出力整形</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AIの応答を表示 -->
+    <div id="message-box">
+      <p id="message">AIの応答がここに表示されます</p>
+    </div>
+    
+    <!-- 完了メッセージ -->
+    <div class="completion-message" id="completion-message" style="display: none;">
+      <span class="checkmark">✓</span>
+      <span>ペルソナが完成しました！</span>
+    </div>
+    
+    <!-- 出力結果を表示するテキストエリア -->
+    <div id="output-container">
+      <h3>生成されたペルソナ</h3>
+      <textarea id="persona-output" readonly></textarea>
+      <div class="button-container">
+        <button id="copy-btn" class="button copy-button">クリップボードにコピー</button>
+        <span id="copy-success" class="success-message">コピーしました！</span>
+      </div>
+    </div>
+
+    <!-- セミナー作成ボタン (初期状態では非表示) -->
+    <div class="return-button">
+      <a href="seminer-title.html" id="create-seminar-btn" class="button seminar-button" style="display: none;">ペルソナ情報をもとにフロントセミナーを作る！</a>
+    </div>
+
+    <!-- メインページに戻るボタン -->
+    <div class="return-button">
+      <a href="index.html" class="button">メインページへ戻る</a>
+    </div>
+  </div>
+
+  <script type="module" src="persona.js"></script>
+</body>
+</html>

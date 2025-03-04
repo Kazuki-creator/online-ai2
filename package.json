@@ -1,0 +1,21 @@
+{
+  "name": "my-glitch-project",
+  "version": "1.0.0",
+  "description": "A minimal Node + Express setup to serve public/index.html",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "openai": "^4.81.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}

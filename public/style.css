@@ -1,0 +1,220 @@
+/* ==========================
+   全体設定
+   ========================== */
+body {
+  font-family: Arial, sans-serif; /* ページ全体のフォント */
+  background-color: #1E1E2F; /* ダークブルー寄りの背景色 */
+  color: #FFFFFF; /* 文字色は白 */
+  margin: 0; /* ブラウザのデフォルトマージンを削除 */
+  padding: 0; /* ブラウザのデフォルトパディングを削除 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================
+   ヘッダー設定
+   ========================== */
+.header {
+  background-color: #252C48; /* ヘッダー背景色 */
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px; /* ヘッダーの高さ */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1000;
+}
+
+.logo {
+  margin-left: 20px; /* ロゴ左余白 */
+}
+
+.logo img {
+  height: 80px; /* ロゴ画像の高さ */
+}
+
+/* ==========================
+   メインコンテンツ設定
+   ========================== */
+.container {
+  width: 100%;
+  padding: 80px 20px; /* コンテナ内の余白 */
+  display: flex;
+}
+
+/* ==========================
+   メインコンテンツエリア
+   ========================== */
+/* サイドバーの分だけ左側に余白を追加 */
+.content {
+  margin-left: 270px;
+  padding: 10px;
+  width: calc(100% - 200px);
+  text-align: left;
+}
+
+/* ==========================
+   サイドバー（ナビゲーション）
+   ========================== */
+.sidebar {
+  width: 200px;
+  background-color: #2A2A3A;
+  padding: 30px;
+  height: calc(100vh - 80px);
+  position: fixed;
+  left: 0;
+  top: 70px;
+}
+
+.sidebar h2 {
+  color: #FFFFFF;
+  font-size: 20px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #666666;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+  padding: 5px 0;
+  font-size: 16px;
+  color: #CCCCCC;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.sidebar li:hover {
+  color: #FFFFFF;
+}
+
+/* サイドバー内のリンク専用スタイル */
+.sidebar-link {
+  color: #CCCCCC !important;       /* 通常時のリンク色 */
+  text-decoration: none !important;
+}
+.sidebar-link:visited {
+  color: #CCCCCC !important;
+}
+.sidebar-link:hover {
+  color: #FFFFFF !important;
+}
+
+/* ==========================
+   見出しデザイン
+   ========================== */
+h1 {
+  color: #FFFFFF;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+h2.section-title {
+  margin-top: 30px;
+  font-size: 24px;
+  color: #FFFFFF;
+  text-align: left;
+}
+
+/* ==========================
+   小項目（カード）のスタイル
+   ========================== */
+/* グリッドレイアウト（アイテムコンテナ） */
+.items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px); /* 各セル250px固定 */
+  grid-auto-rows: 80px; /* 行の高さ80px固定 */
+  gap: 50px; /* アイテム間の隙間 */
+  margin-bottom: 30px;
+  margin-left: 0;
+  justify-content: start; /* 左詰め */
+}
+
+/* カード（グリッドアイテム）の設定 */
+.item {
+  width: 250px;
+  height: 80px;
+  padding: 15px;
+  background: linear-gradient(135deg, #6E44FF, #8E54E9);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.item:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(135deg, #5A3BD8, #7A4BCE);
+}
+
+.item h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #FFFFFF;
+}
+
+.item p {
+  margin-top: 10px;
+  color: #DADADA;
+  font-size: 14px;
+}
+
+/* ==========================
+   リンクスタイルのリセット
+   ========================== */
+/* カード内部のリンク */
+.item a {
+  text-decoration: none !important;
+  color: inherit !important;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================
+   その他
+   ========================== */
+#message {
+  white-space: pre-wrap;
+}
+
+textarea {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* オシャレな送信ボタン */
+button[type="submit"] {
+  background-color: #6E44FF;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #5A3BD8;
+  transform: translateY(-2px);
+}
+
+/* ペルソナ選定ページの入力フィールド専用のスタイル */
+persona-input {
+  width: 100%;         /* 親要素いっぱいに広げる */
+  max-width: 600px;    /* 必要に応じて最大幅を設定 */
+  height: 40px;        /* 高さを40pxに設定（例） */
+  padding: 10px;       /* 内側余白 */
+  font-size: 16px;     /* フォントサイズ */
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* パディングを含めた幅計算 */
+}

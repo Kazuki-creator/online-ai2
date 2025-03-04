@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事前アンケート</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- pre-survey.js をモジュールとして読み込む -->
+  <script type="module" src="pre-survey.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>事前アンケート</h1>
+    <p>以下の質問に回答してください。</p>
+
+    <!-- 入力フォーム -->
+    <form id="pre-survey-form">
+      <div class="form-group">
+        <label for="question1">
+          ① 今回、ファーストセッションを受ける目的はなんですか？
+        </label>
+        <textarea id="question1" rows="3" placeholder="ここに回答を入力"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="question2">
+          ② 3ヵ月から1年以内に欲しい結果・目的は何ですか？
+        </label>
+        <textarea id="question2" rows="3" placeholder="ここに回答を入力"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="question3">
+          ③ なぜその結果が欲しいのですか？
+        </label>
+        <textarea id="question3" rows="3" placeholder="ここに回答を入力"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="question4">
+          ④ 目標達成を妨げる障害があるとしたら何ですか？
+        </label>
+        <textarea id="question4" rows="3" placeholder="ここに回答を入力"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="question5">
+          ⑤ その他、あなたの事を教えてください。<br>
+          (例：今までの経験、考え方、現在の状況、お仕事、年齢（任意）、趣味、ご家族など)
+        </label>
+        <textarea id="question5" rows="4" placeholder="ここに回答を入力"></textarea>
+      </div>
+      <button type="submit" id="pre-survey-submit-btn" class="button">送信</button>
+    </form>
+
+    <!-- LLMからの応答を表示するエリア -->
+    <div id="pre-survey-message"></div>
+
+    <!-- メインページに戻るリンク -->
+    <a href="index.html" class="button sidebar-link">メインページへ戻る</a>
+  </div>
+</body>
+</html>
